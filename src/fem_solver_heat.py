@@ -13,8 +13,9 @@ Test problem is chosen to give an exact solution at all nodes of the mesh.
 
 import numpy as np
 import matplotlib.pyplot as plt
+import fenics as fs
 
-from fenics import *
+from src.utils.plotting import save_dynamic_contours
 
 
 def boundary(x, on_boundary):
@@ -30,44 +31,49 @@ if __name__ == '__main__':
 
     # Create mesh and define function space
     nx = ny = 8
-    mesh = UnitSquareMesh(nx, ny)
-    V = FunctionSpace(mesh, 'P', 1)
+    mesh = fs.UnitSquareMesh(nx, ny)
+    V = fs.FunctionSpace(mesh, 'P', 1)
 
     # Define boundary condition
-    u_D = Expression('1 + x[0]*x[0] + alpha*x[1]*x[1] + beta*t',
-                     degree=2, alpha=alpha, beta=beta, t=0)
+    u_D = fs.Expression('1 + x[0]*x[0] + alpha*x[1]*x[1] + beta*t',
+                        degree=2, alpha=alpha, beta=beta, t=0)
 
-    bc = DirichletBC(V, u_D, boundary)
+    bc = fs.DirichletBC(V, u_D, boundary)
 
     # Define initial value
-    u_n = interpolate(u_D, V)
+    u_n = fs.interpolate(u_D, V)
     # u_n = project(u_D, V)
 
     # Define variational problem
-    u = TrialFunction(V)
-    v = TestFunction(V)
-    f = Constant(beta - 2 - 2 * alpha)
+    u = fs.TrialFunction(V)
+    v = fs.TestFunction(V)
+    f = fs.Constant(beta - 2 - 2 * alpha)
 
-    F = u * v * dx + dt * dot(grad(u), grad(v)) * dx - (u_n + dt * f) * v * dx
-    a, L = lhs(F), rhs(F)
+    F = u * v * fs.dx + dt * fs.dot(fs.grad(u), fs.grad(v)) * fs.dx - (u_n + dt * f) * v * fs.dx
+    a, L = fs.lhs(F), fs.rhs(F)
 
     # Time-stepping
-    u = Function(V)
+    u = fs.Function(V)
     t = 0
+
+    images1d = []
+
     for n in range(num_steps):
         # Update current time
         t += dt
         u_D.t = t
 
         # Compute solution
-        solve(a == L, u, bc)
+        fs.solve(a == L, u, bc)
 
         # Plot solution
-        plot(u)
+        # plot(u)
         # plt.show()
+        u_arr1d = u.vector().get_local()
+        images1d.append(u_arr1d)
 
         # Compute error at vertices
-        u_e = interpolate(u_D, V)
+        u_e = fs.interpolate(u_D, V)
         error = np.abs(u_e.vector().get_local() - u.vector().get_local()).max()
         print('t = %.2f: error = %.3g' % (t, error))
 
@@ -75,6 +81,5 @@ if __name__ == '__main__':
         u_n.assign(u)
 
     # Hold plot
-    # plot(u)
-    # plot(mesh)
-    # plt.show()
+    save_dynamic_contours(images1d, 1, 1, num_steps)
+
