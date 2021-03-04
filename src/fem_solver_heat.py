@@ -12,7 +12,6 @@ Test problem is chosen to give an exact solution at all nodes of the mesh.
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import fenics as fs
 
 from src.utils.plotting import save_dynamic_contours
@@ -24,7 +23,7 @@ def boundary(x, on_boundary):
 
 if __name__ == '__main__':
     T = 2.0  # final time
-    num_steps = 10  # number of time steps
+    num_steps = 100  # number of time steps
     dt = T / num_steps  # time step size
     alpha = 3  # parameter alpha
     beta = 1.2  # parameter beta
@@ -66,11 +65,12 @@ if __name__ == '__main__':
         # Compute solution
         fs.solve(a == L, u, bc)
 
-        # Plot solution
-        # plot(u)
-        # plt.show()
-        u_arr1d = u.vector().get_local()
-        images1d.append(u_arr1d)
+        # Restore numpy object
+        image1d = np.empty((81,), dtype=np.float)
+        for v in fs.vertices(mesh):
+            image1d[v.index()] = u(*mesh.coordinates()[v.index()])
+
+        images1d.append(image1d)
 
         # Compute error at vertices
         u_e = fs.interpolate(u_D, V)
@@ -80,6 +80,5 @@ if __name__ == '__main__':
         # Update previous solution
         u_n.assign(u)
 
-    # Hold plot
-    save_dynamic_contours(images1d, 1, 1, num_steps)
-
+    # Plotting
+    save_dynamic_contours(images1d, 1.0, 1.0)
