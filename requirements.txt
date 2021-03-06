@@ -1,0 +1,6 @@
+numpy==1.19.5
+matplotlib==3.3.4
+tensorflow==2.4.1
+DeepXDE==0.10.0
+celluloid==0.2.0
+fenics==2019.1.0
