@@ -1,5 +1,4 @@
-## Comparison of DL & FEM PDE Solvers for Optimal Control Problems 
-
+## Empirical Comparison of PDE Solvers: FEM vs DL
 
 ### Usage
 
@@ -8,7 +7,20 @@ TODO
 
 ### Results
 
+#### 2D Heat Equation
+
 TODO
+
+#### Non-linear L-shaped Poisson equation
+
+TODO
+
+
+### More examples
+
+https://github.com/hplgit/fenics-tutorial/tree/master/src/vol1/python
+
+https://github.com/lululxvi/deepxde/blob/master/examples/
 
 
 ### References
