@@ -13,6 +13,7 @@ Test problem is chosen to give an exact solution at all nodes of the mesh.
 
 import numpy as np
 import fenics as fs
+import matplotlib.pyplot as plt
 
 from src.utils.plotting import save_dynamic_contours
 
@@ -81,4 +82,7 @@ if __name__ == '__main__':
         u_n.assign(u)
 
     # Plotting
-    save_dynamic_contours(images1d, 1.0, 1.0)
+    # fs.plot(u)
+    # plt.show()
+
+    save_dynamic_contours(images1d, 1.0, 1.0, 'heat2d')
