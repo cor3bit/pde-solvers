@@ -2,41 +2,82 @@
 
 ### Usage
 
-TODO
+To scripts require [FEniCS distribution](https://fenicsproject.org/download/)
+installed 
+as well as [Tensorflow 2](https://www.tensorflow.org/install) 
+backend for the DeepXDE solver.
+
+- Install the requirements with `pip`:
+
+```
+$ pip install -r requirements.txt
+```
+
+- Run the FEM solver for the 2D heat equation:
+
+```
+$ python fem_solver_heat2d.py
+```
+
+- Run the DL solver for the 2D heat equation:
+
+```
+$ python dl_solver_heat2d.py
+```
+
+- Run the FEM solver for the Nonlinear L-shaped Poisson equation:
+
+```
+$ python fem_solver_poisson.py
+```
+
+- Run the DL solver for the Nonlinear L-shaped Poisson equation:
+
+```
+$ python dl_solver_poisson.py
+```
+
+- Run the comparison script:
+
+```
+$ python run_comparison.py
+```
 
 
 ### Results
 
 #### 2D Heat Equation
 
-TODO
+FEniCS         |  DeepXDE     |
+:-------------------------:|:-------------------------:|
+![](artifacts/animation_fem_heat2d.gif)  |  ![](artifacts/animation_dl_heat2d.gif) |
+
+
 
 #### Non-linear L-shaped Poisson equation
 
-TODO
+FEniCS         |  DeepXDE     |
+:-------------------------:|:-------------------------:|
+![](artifacts/animation_fem_poisson.gif)  |  ![](artifacts/animation_dl_poisson.gif) |
 
 
 ### More examples
 
-https://github.com/hplgit/fenics-tutorial/tree/master/src/vol1/python
-
-https://github.com/lululxvi/deepxde/blob/master/examples/
+Wide galleries of examples are available at:
+- [FEniCS examples](https://github.com/hplgit/fenics-tutorial/tree/master/src/vol1/python)
+- [DeepXDE examples](https://github.com/lululxvi/deepxde/blob/master/examples/)
 
 
 ### References
 
-References:
-1. Sirignanoa, Spiliopoulosb - DGM: A deep 
-   learning algorithm for solving partial 
-   differential equations (2018). 
-   Web: https://www.sciencedirect.com/science/article/pii/S0021999118305527
-2. Han et al - Solving high-dimensional partial 
-   differential equations using deep learning (2018). 
-   Web: https://www.pnas.org/content/115/34/8505.full
+1. Langtangen, Logg - Introduction to Numerical 
+   Methods for Variational Problems (2016). 
+   Web: https://hplgit.github.io/fem-book/doc/web/index.html
+2. Langtangen, Logg - Solving PDEs in Python, 
+   The FEniCS Tutorial I (2016). 
+   Web: https://www.springer.com/gp/book/9783319524610
 3. Lu et al - DeepXDE: A deep learning library for 
    solving differential equations (2019). 
    Web: https://arxiv.org/abs/1907.04502
-4. Langtangen, Logg - Solving PDEs in Python, 
-   The FEniCS Tutorial I (2016). 
-   Web: https://www.springer.com/gp/book/9783319524610
+
    
