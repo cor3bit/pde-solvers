@@ -38,7 +38,27 @@ def save_dynamic_contours(images1d, meshsize_x, meshsize_y, name):
     animation.save(f'../artifacts/animation_fem_{name}.gif', writer='imagemagick')
 
 
-def save_from_model(model, meshsize_x, meshsize_y, T, Nt, name):
+def save_contour(image1d, meshsize_x, meshsize_y, name):
+    # x, y
+    Lx, Ly = meshsize_x, meshsize_y
+    Nx, Ny = 9, 9
+    x = np.linspace(0, Lx, Nx)
+    y = np.linspace(0, Ly, Ny)
+    xx, yy = np.meshgrid(x, y)
+
+    # u
+    samples = list(product(x, y))
+    assert len(samples) == Nx * Ny
+
+    u = np.reshape(image1d, (Nx, Ny))
+
+    # chart
+    cont = plt.contourf(xx, yy, u, 25, cmap='jet')
+
+    plt.savefig(f'../artifacts/fem_{name}.png')
+
+
+def save_dynamic_contours_from_model(model, meshsize_x, meshsize_y, T, Nt, name):
     dt = T / Nt
     Lx, Ly = meshsize_x, meshsize_y
     Nx, Ny = 9, 9
@@ -75,3 +95,24 @@ def save_from_model(model, meshsize_x, meshsize_y, T, Nt, name):
     animation = camera.animate(interval=200, repeat=False, blit=True)
 
     animation.save(f'../artifacts/animation_dl_{name}.gif', writer='imagemagick')
+
+
+def save_contour_from_model(model, meshsize_x, meshsize_y, name):
+    # x, y
+    Lx, Ly = meshsize_x, meshsize_y
+    Nx, Ny = 9, 9
+    x = np.linspace(0, Lx, Nx)
+    y = np.linspace(0, Ly, Ny)
+    xx, yy = np.meshgrid(x, y)
+
+    # u
+    samples = list(product(x, y))
+    assert len(samples) == Nx * Ny
+
+    u = model.predict(samples)
+    u = np.reshape(np.array(u), (Nx, Ny), 'F')
+
+    # chart
+    cont = plt.contourf(xx, yy, u, 25, cmap='jet')
+
+    plt.savefig(f'../artifacts/dl_{name}.png')

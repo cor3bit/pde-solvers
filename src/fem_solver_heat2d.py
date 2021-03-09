@@ -22,7 +22,7 @@ def boundary(x, on_boundary):
     return on_boundary
 
 
-def main():
+def solve_heat_with_fem(lightweight=False):
     T = 2.0  # final time
     num_steps = 100  # number of time steps
     dt = T / num_steps  # time step size
@@ -73,20 +73,23 @@ def main():
 
         images1d.append(image1d)
 
-        # Compute error at vertices
-        u_e = fs.interpolate(u_D, V)
-        error = np.abs(u_e.vector().get_local() - u.vector().get_local()).max()
-        print('t = %.2f: error = %.3g' % (t, error))
+        if not lightweight:
+            # Compute error at vertices
+            u_e = fs.interpolate(u_D, V)
+            error = np.abs(u_e.vector().get_local() - u.vector().get_local()).max()
+            print('t = %.2f: error = %.3g' % (t, error))
 
         # Update previous solution
         u_n.assign(u)
 
     # Plotting
-    # fs.plot(u)
-    # plt.show()
+    if not lightweight:
+        fs.plot(u)
+        plt.show()
+        save_dynamic_contours(images1d, 1.0, 1.0, 'heat2d')
 
-    save_dynamic_contours(images1d, 1.0, 1.0, 'heat2d')
+    return images1d
 
 
 if __name__ == '__main__':
-    main()
+    solve_heat_with_fem()
