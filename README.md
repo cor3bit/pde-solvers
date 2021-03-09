@@ -70,7 +70,7 @@ Wide galleries of examples are available at:
 
 ### References
 
-1. Langtangen, Logg - Introduction to Numerical 
+1. Langtangen, Mardal - Introduction to Numerical 
    Methods for Variational Problems (2016). 
    Web: https://hplgit.github.io/fem-book/doc/web/index.html
 2. Langtangen, Logg - Solving PDEs in Python, 
