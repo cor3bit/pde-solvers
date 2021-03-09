@@ -5,7 +5,6 @@ from deepxde.backend import tf
 from src.utils.plotting import save_from_model
 
 
-
 def pde(x, u):
     du_t = dde.grad.jacobian(u, x, i=0, j=0)
 
@@ -64,6 +63,7 @@ def main():
     # dde.saveplot(losshistory, train_state, issave=True, isplot=True)
 
     save_from_model(model, 1, 1, 2, 100, 'heat2d')
+
 
 if __name__ == "__main__":
     main()

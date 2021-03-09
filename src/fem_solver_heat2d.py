@@ -22,7 +22,7 @@ def boundary(x, on_boundary):
     return on_boundary
 
 
-if __name__ == '__main__':
+def main():
     T = 2.0  # final time
     num_steps = 100  # number of time steps
     dt = T / num_steps  # time step size
@@ -86,3 +86,7 @@ if __name__ == '__main__':
     # plt.show()
 
     save_dynamic_contours(images1d, 1.0, 1.0, 'heat2d')
+
+
+if __name__ == '__main__':
+    main()
