@@ -6,10 +6,16 @@ from src.utils.plotting import save_contour_from_model
 
 
 def _pde(x, u):
+    du_x = dde.grad.jacobian(u, x, i=0, j=0)
+    du_y = dde.grad.jacobian(u, x, i=0, j=1)
     du_xx = dde.grad.hessian(u, x, i=0, j=0)
     du_yy = dde.grad.hessian(u, x, i=1, j=1)
 
-    return - du_xx - u * du_yy + 2 - 4 * u
+    return (
+            - (1 + u * u) * du_xx - 2 * u * du_x * du_x
+            - (1 + u * u) * du_yy - 2 * u * du_y * du_y
+            + 10 * x[:, 0:1] + 20 * x[:, 1:] + 10
+    )
 
 
 def _boundary(_, on_boundary):
@@ -17,8 +23,8 @@ def _boundary(_, on_boundary):
 
 
 def _func(x):
-    # 1 + x^2 - 2*y^2
-    return 1. + x[:, 0:1] * x[:, 0:1] - 2 * x[:, 1:] * x[:, 1:]
+    # 1 + x + 2*y
+    return 1. + x[:, 0:1] + 2 * x[:, 1:]
 
 
 def solve_poisson_with_dl(lightweight=False):
@@ -35,13 +41,14 @@ def solve_poisson_with_dl(lightweight=False):
         num_domain=1200,
         num_boundary=120,
         num_test=10000,
-        solution=_func,
+        # solution=_func,
     )
 
     # NN
+    layer_size = [2] + [32] + [64] + [256] + [64] + [32] + [1]
     activation = 'tanh'
     initializer = 'Glorot uniform'
-    net = dde.maps.FNN([2] + [50] * 4 + [1], activation, initializer)
+    net = dde.maps.FNN(layer_size, activation, initializer)
     model = dde.Model(data, net)
 
     # Train NN

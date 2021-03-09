@@ -15,6 +15,7 @@ from src.utils.plotting import save_contour
 
 
 def q(u):
+    "Return nonlinear coefficient"
     return 1 + u ** 2
 
 
@@ -24,7 +25,7 @@ def solve_poisson_with_fem(lightweight=False):
     V = fs.FunctionSpace(mesh, 'P', 1)
 
     # Define boundary condition
-    u_code = 'x[0]*x[0] - 2 * x[1]* x[1] + 1'
+    u_code = 'x[0] + 2*x[1] + 1'
     u_D = fs.Expression(u_code, degree=2)
 
     def boundary(x, on_boundary):
@@ -37,7 +38,7 @@ def solve_poisson_with_fem(lightweight=False):
     v = fs.TestFunction(V)
 
     # f = fs.Expression(f_code, degree=2)
-    f_code = '4*x[0]*x[0] - 8 * x[1]* x[1] + 2'
+    f_code = '-10*x[0] - 20*x[1] - 10'
     f = fs.Expression(f_code, degree=2)
 
     F = q(u) * fs.dot(fs.grad(u), fs.grad(v)) * fs.dx - f * v * fs.dx

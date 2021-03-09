@@ -25,13 +25,13 @@ $ python fem_solver_heat2d.py
 $ python dl_solver_heat2d.py
 ```
 
-- Run the FEM solver for the Nonlinear L-shaped Poisson equation:
+- Run the FEM solver for the Nonlinear Poisson equation:
 
 ```
 $ python fem_solver_poisson.py
 ```
 
-- Run the DL solver for the Nonlinear L-shaped Poisson equation:
+- Run the DL solver for the Nonlinear Poisson equation:
 
 ```
 $ python dl_solver_poisson.py
@@ -54,11 +54,11 @@ FEniCS         |  DeepXDE     |
 
 
 
-#### Non-linear L-shaped Poisson equation
+#### Non-linear Poisson equation
 
 FEniCS         |  DeepXDE     |
 :-------------------------:|:-------------------------:|
-![](artifacts/animation_fem_poisson.gif)  |  ![](artifacts/animation_dl_poisson.gif) |
+![](artifacts/fem_poisson.png)  |  ![](artifacts/dl_poisson.png) |
 
 
 ### More examples
