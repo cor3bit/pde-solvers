@@ -13,28 +13,11 @@ backend for the DeepXDE solver.
 $ pip install -r requirements.txt
 ```
 
-- Run the FEM solver for the 2D heat equation:
+- Run the FEM solver for the 2D heat equation
+(or equivalently the DL solver for 2D heat or Poisson equation):
 
 ```
 $ python fem_solver_heat2d.py
-```
-
-- Run the DL solver for the 2D heat equation:
-
-```
-$ python dl_solver_heat2d.py
-```
-
-- Run the FEM solver for the Nonlinear Poisson equation:
-
-```
-$ python fem_solver_poisson.py
-```
-
-- Run the DL solver for the Nonlinear Poisson equation:
-
-```
-$ python dl_solver_poisson.py
 ```
 
 - Run the comparison script:
