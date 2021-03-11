@@ -1,10 +1,11 @@
 from time import perf_counter
 from itertools import product
 
+from memory_profiler import memory_usage
 import numpy as np
 
-# from src.dl_solver_heat2d import solve_heat_with_dl
-# from src.dl_solver_poisson import solve_poisson_with_dl
+from src.dl_solver_heat2d import solve_heat_with_dl
+from src.dl_solver_poisson import solve_poisson_with_dl
 from src.fem_solver_heat2d import solve_heat_with_fem
 from src.fem_solver_poisson import solve_poisson_with_fem
 
@@ -20,10 +21,11 @@ def _true_solution_poisson(x, y):
 def _eval_solver(func, is_dl, is_heat):
     print('Calculations started.')
     start = perf_counter()
-    result = func(True)
+    mem_usage, result = memory_usage((func, (True,)), max_usage=True, retval=True)
     stop = perf_counter()
     print('Calculations finished.')
     print(f'Elapsed time: {stop - start:.4f} sec.')
+    print(f'Memory footprint: {mem_usage:.2f} MB.')
 
     print('Measuring accuracy.')
     # mesh
@@ -75,8 +77,8 @@ def run_comparison():
     _eval_solver(solve_poisson_with_fem, False, False)
 
     # DL
-    # _eval_solver(solve_heat_with_dl, True, True)
-    # _eval_solver(solve_poisson_with_dl, True, False)
+    _eval_solver(solve_heat_with_dl, True, True)
+    _eval_solver(solve_poisson_with_dl, True, False)
 
 
 if __name__ == '__main__':
