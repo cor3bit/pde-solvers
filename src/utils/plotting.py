@@ -25,10 +25,16 @@ def save_dynamic_contours(images1d, meshsize_x, meshsize_y, name):
 
     camera = Camera(fig)
 
-    for im in images1d:
-        z = np.reshape(im, (Nx, Ny))
+    n_ims = len(images1d)
+    for i, im in enumerate(images1d):
+        u = np.reshape(im, (Nx, Ny))
+        cont = plt.contourf(x, y, u, 25, cmap='jet')
 
-        cont = plt.contourf(x, y, z, 25, cmap='jet')
+        # save first and last figure
+        if i == 0:
+            plt.savefig(f'../artifacts/fem_{name}_t0_02.png')
+        if i == n_ims - 1:
+            plt.savefig(f'../artifacts/fem_{name}_t2.png')
 
         camera.snap()
 
@@ -80,15 +86,18 @@ def save_dynamic_contours_from_model(model, meshsize_x, meshsize_y, T, Nt, name)
     for _ in range(Nt):
         t += dt
 
-        # TODO
         samples = list(product([t], x, y))
         assert len(samples) == Nx * Ny
 
         u = model.predict(samples)
-
         u = np.reshape(np.array(u), (Nx, Ny), 'F')
 
         cont = plt.contourf(xx, yy, u, 25, cmap='jet')
+        # save first and last figure
+        if t == np.isclose(t, 0.02):
+            plt.savefig(f'../artifacts/dl_{name}_t0_02.png')
+        elif np.isclose(t, 2.):
+            plt.savefig(f'../artifacts/dl_{name}_t2.png')
 
         camera.snap()
 
