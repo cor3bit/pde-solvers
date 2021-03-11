@@ -1,6 +1,7 @@
-tensorflow==2.4.1
-matplotlib==3.3.4
 DeepXDE==0.10.0
+tensorflow==2.4.1
 numpy==1.19.5
+matplotlib==3.3.4
+memory_profiler==0.58.0
 celluloid==0.2.0
 fenics==2019.1.0
