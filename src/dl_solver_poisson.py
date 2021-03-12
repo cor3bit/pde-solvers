@@ -45,14 +45,14 @@ def solve_poisson_with_dl(lightweight=False):
     )
 
     # NN
-    layer_size = [2] + [32] + [64] + [256] + [64] + [32] + [1]
-    activation = 'tanh'
+    layer_size = [2] + [128] + [256] + [512] + [256] + [128] + [1]
+    activation = 'relu'
     initializer = 'Glorot uniform'
     net = dde.maps.FNN(layer_size, activation, initializer)
     model = dde.Model(data, net)
 
     # Train NN
-    model.compile('adam', lr=0.001)
+    model.compile('adam', lr=0.0005)
 
     losshistory, train_state = model.train(epochs=10000)
 

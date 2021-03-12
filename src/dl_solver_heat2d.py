@@ -35,16 +35,16 @@ def solve_heat_with_dl(lightweight=False):
         geomtime,
         _pde,
         ic_bcs=[ic, bc],
-        num_domain=400,
-        num_boundary=200,
-        num_initial=100,
+        num_domain=500,
+        num_boundary=300,
+        num_initial=200,
         num_test=10000,
         solution=_func,
     )
 
     # inputs (2D Heat Eqn) - t, x, y
     # output (solution) - u(t, x, y)
-    layer_size = [3] + [32] + [64] + [256] + [64] + [32] + [1]
+    layer_size = [3] + [128] + [256] + [521] + [256] + [128] + [1]
     activation = 'tanh'
     initializer = 'Glorot uniform'
     net = dde.maps.FNN(layer_size, activation, initializer)
